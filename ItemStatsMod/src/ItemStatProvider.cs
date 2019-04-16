@@ -47,7 +47,7 @@ namespace ItemStatsMod
                 [ItemIndex.Bear] = new List<Test>()
                 {
                     new Test(calculateStat: (itemCount) => (1f - 1f / (0.15f * itemCount + 1f)),
-                        statText: "Proc Chance"
+                        statText: "Block Chance"
                     ),
                 },
 
@@ -56,7 +56,7 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => itemCount * 0.14f,
-                        statText: "Walk Speed Increase"
+                        statText: "Movement Speed Increase"
                     )
                 },
 
@@ -73,7 +73,7 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => 0.0225f + 0.0225f * itemCount,
-                        statText: "Healing Increase",
+                        statText: "Healing Per Second",
                         // TODO: use a decorator instead of additional param for the formatter
                         formatter: new PercentageFormatter(maxValue: 1f)
                     ),
@@ -87,7 +87,7 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => itemCount * 0.1f,
-                        statText: "Crit Chance",
+                        statText: "Additional Crit Chance",
                         formatter: new PercentageFormatter(maxValue: 1f)
                     )
                 },
@@ -95,7 +95,7 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => itemCount,
-                        statText: "Total Jumps",
+                        statText: "Total Additional Jumps",
                         formatter: new IntFormatter()
                     )
                 },
@@ -114,17 +114,22 @@ namespace ItemStatsMod
                         statText: "Ghost Duration",
                         formatter: new IntFormatter("s")
                     )
+					new Test(
+                        calculateStat: (itemCount) => 1f - Math.Pow(0.90f, 1 + //CLOVERCOUNT//),
+                        statText: "Ghost Chance"
+                    )
+					
                 },
                 [ItemIndex.Knurl] = new List<Test>()
                 {
                     new Test(
                         calculateStat: (itemCount) => itemCount * 40f,
-                        statText: "Maximum Health",
+                        statText: "Bonus Health",
                         formatter: new IntFormatter("HP")
                     ),
                     new Test(
                         calculateStat: (itemCount) => itemCount * 1.6f,
-                        statText: "Regeneration",
+                        statText: "Additional Regeneration",
                         formatter: new IntFormatter("HP/s")
                     ),
                 },
@@ -170,7 +175,7 @@ namespace ItemStatsMod
                 [ItemIndex.Bandolier] = new List<Test>()
                 {
                     new Test(
-                        calculateStat: (itemCount) => (1f - 1f / Mathf.Pow(itemCount + 1, 0.33f)),
+                        calculateStat: (itemCount) =>  1f - Mathf.Pow (1f-(1f - 1f / Mathf.Pow((itemCount + 1), 0.33f)), 1f + //CLOVERCOUNT//),
                         statText: "Drop Chance"
                     ),
                 },
@@ -180,12 +185,22 @@ namespace ItemStatsMod
                         calculateStat: (itemCount) => 1.25f + 1.25f * itemCount,
                         statText: "Damage Increase"
                     ),
+					new Test(
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(0.92f,1f + //CLOVERCOUNT//),
+                        statText: "Proc Chance",
+                        formatter: new PercentageFormatter()
+                    ),
                 },
                 [ItemIndex.FireRing] = new List<Test>()
                 {
                     new Test(
                         calculateStat: (itemCount) => 2.5f + 2.5f * itemCount,
                         statText: "Damage Increase"
+                    ),
+					new Test(
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(0.92f,1f + //CLOVERCOUNT//),
+                        statText: "Proc Chance",
+                        formatter: new PercentageFormatter()
                     ),
                 },
                 [ItemIndex.WarCryOnMultiKill] = new List<Test>()
@@ -206,7 +221,7 @@ namespace ItemStatsMod
                 [ItemIndex.StunChanceOnHit] = new List<Test>()
                 {
                     new Test(
-                        calculateStat: (itemCount) => 1f - 1f / (0.05f * itemCount + 1f),
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(1f-(1f - 1f / (0.05f * itemCount + 1f)),1f + //CLOVERCOUNT//,
                         statText: "Stun Chance Increase",
                         formatter: new PercentageFormatter(maxValue: 1f)
                     ),
@@ -301,7 +316,7 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => itemCount,
-                        statText: "Soul Energy Increase"
+                        statText: "Soul Energy"
                     ),
                 },
                 [ItemIndex.HealOnCrit] = new List<Test>()
@@ -336,16 +351,20 @@ namespace ItemStatsMod
                         formatter: new IntFormatter()
                     ),
                     new Test(
-                        calculateStat: (itemCount) => 0.15f + 0.15f * itemCount,
+                        calculateStat: (itemCount) => 1- Mathf.Pow(0.85f, itemCount),
                         statText: "Cooldown Decrease"
                     ),
                 },
                 [ItemIndex.GoldOnHit] = new List<Test>()
                 {
                     new Test(
-                        calculateStat: (itemCount) => itemCount * 2f * Run.instance.difficultyCoefficient,
+                        calculateStat: (itemCount) => itemCount * 3f * Run.instance.difficultyCoefficient,
                         statText: "Gold per Hit(*)",
                         formatter: new IntFormatter()
+                    ),
+					new Test(
+                        calculateStat: (itemCount) => 1f - Math.Pow(0.70f, 1 + //CLOVERCOUNT//),
+                        statText: "Proc Chance"
                     ),
                 },
                 [ItemIndex.IncreaseHealing] = new List<Test>()
@@ -375,20 +394,35 @@ namespace ItemStatsMod
                         statText: "Bounce Range",
                         formatter: new IntFormatter("m")
                     ),
+					new Test(
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(0.75f, 1 + //CLOVERCOUNT//),
+                        statText: "Proc Chance"
+                    ),
                 },
                 [ItemIndex.TreasureCache] = new List<Test>()
                 {
                     new Test(
-                        calculateStat: (itemCount) => itemCount,
-                        statText: "Crate Count",
-                        formatter: new IntFormatter()
+                        calculateStat: (itemCount) => 80f/(80f + 20f * itemCount + Mathf.Pow(itemCount,2f)),
+                        statText: "Common Chance",
+                        formatter: new PercentageFormatter(maxValue: 1f)
                     ),
+					new Test(
+                        calculateStat: (itemCount) => (20f * itemCount)/(80f + 20f * itemCount + Mathf.Pow(itemCount,2f)),
+                        statText: "Uncommon Chance",
+                        formatter: new PercentageFormatter(maxValue: 1f)
+                    ),
+					new Test(
+                        calculateStat: (itemCount) => (Mathf.Pow(itemCount,2f))/(80f + 20f * itemCount + Mathf.Pow(itemCount,2f)),
+                        statText: "Rare Chance",
+                        formatter: new PercentageFormatter(maxValue: 1f)
+                    ),
+					
                 },
                 [ItemIndex.BounceNearby] = new List<Test>()
                 {
                     new Test(
-                        calculateStat: (itemCount) => 1f - 100f / (100f + 20f * itemCount),
-                        statText: "Bounce Chance"
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(1f - (1f - 100f / (100f + 20f * itemCount)), 1f + //CLOVERCOUNT//),
+                        statText: "Hook Chance"
                     ),
                     new Test(
                         calculateStat: (itemCount) => 5f + itemCount * 5f,
@@ -407,8 +441,8 @@ namespace ItemStatsMod
                 {
                     new Test(
                         calculateStat: (itemCount) => 30f * itemCount,
-                        statText: "Shield Point Increase",
-                        formatter: new IntFormatter("SP")
+                        statText: "Sprint Bonus Armor",
+                        formatter: new IntFormatter()
                     ),
                 },
                 [ItemIndex.ShockNearby] = new List<Test>()
@@ -441,7 +475,7 @@ namespace ItemStatsMod
                         statText: "Damage Increase"
                     ),
                     new Test(
-                        calculateStat: (itemCount) => (0.025f + 0.025f * itemCount),
+                        calculateStat: (itemCount) => 1f - Mathf.Pow(1f - (0.025f + 0.025f * itemCount), 1f + //CLOVERCOUNT//),
                         statText: "Proc Chance Increase",
                         formatter: new PercentageFormatter(maxValue: 1f)
                     ),
@@ -496,12 +530,16 @@ namespace ItemStatsMod
                         statText: "Missile Damage Increase",
                         formatter: new IntFormatter()
                     ),
+					new Test(
+                        calculateStat: (itemCount) => 1 - Mathf.Pow(0.90f, 1f + //CLOVERCOUNT//) ,
+                        statText: "Proc Chance",
+                    ),
                 },
                 [ItemIndex.Infusion] = new List<Test>()
                 {
                     new Test(
                         calculateStat: (itemCount) => 100 * itemCount,
-                        statText: "Max Possible Health",
+                        statText: "Max Additional Health",
                         formatter: new IntFormatter("HP")
                     ),
                 },
@@ -519,7 +557,8 @@ namespace ItemStatsMod
                         calculateStat: (itemCount) => 0.3f * itemCount,
                         statText: "Max Attack Speed"
                     )
-                }
+                },
+				
             };
         }
 
